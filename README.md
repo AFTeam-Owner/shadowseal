@@ -1,9 +1,9 @@
 <h1 align="center">
-  🕶️ SHADOWCRYPT - Encrypt. Execute. Never Expose.
+  🕶️ SHADOWSEAL - Encrypt. Execute. Never Expose.
 </h1>
 
 <h1 align="center">
-  <img src="https://readme-typing-svg.herokuapp.com/?font=Fira+Code&size=24&pause=1000&color=FF44CC&center=true&vCenter=true&width=550&lines=🕶️+SHADOWCRYPT;Encrypt.+Execute.+Never+Expose.;AI+proof+.+Human+proof+.+Undecodable." alt="Typing SVG" />
+  <img src="https://readme-typing-svg.herokuapp.com/?font=Fira+Code&size=24&pause=1000&color=FF44CC&center=true&vCenter=true&width=550&lines=🕶️+SHADOWSEAL;Encrypt.+Execute.+Never+Expose.;AI+proof+.+Human+proof+.+Undecodable." alt="Typing SVG" />
 </h1>
 
 <p align="center">
@@ -11,14 +11,14 @@
   <img src="https://img.shields.io/badge/AI%20Proof-✅-green?style=for-the-badge&logo=python&logoColor=white"/>
   <img src="https://img.shields.io/badge/Platform-All%20OS-blue?style=for-the-badge&logo=linux"/>
   <img src="https://badgen.net/badge/Encrypted%20Lines/∞/purple?icon=code"/>
-  <img src="https://img.shields.io/github/stars/AFTeam-Owner/shadowcrypt?style=social"/>
-  <img src="https://visitor-badge.laobi.icu/badge?page_id=AFTeam-Owner.shadowcrypt"/>
+  <img src="https://img.shields.io/github/stars/AFTeam-Owner/shadowseal?style=social"/>
+  <img src="https://visitor-badge.laobi.icu/badge?page_id=AFTeam-Owner.shadowseal"/>
 </p>
 
 ---
 
-💣 What is ShadowCrypt?
-ShadowCrypt isn’t just a tool — it’s an ideology.
+💣 What is ShadowSeal?
+ShadowSeal isn’t just a tool — it’s an ideology.
 Made for those who encrypt not to hide, but to rule.
 
 - Turns `.py` files into undecodeable yet runnable binaries.
@@ -32,10 +32,10 @@ Made for those who encrypt not to hide, but to rule.
 
 ```mermaid
 graph TD
-    A[Original .py file] --> B[Encrypt with ShadowCrypt 🔐]
+    A[Original .py file] --> B[Encrypt with ShadowSeal 🔐]
     B --> C[🔒 Unreadable lock.shc]
     C --> D[🧠 Executes Normally]
-    C -. 🚫 Decryption Not Possible .-> X[❌ Not even ShadowCrypt<br>creator!]
+    C -. 🚫 Decryption Not Possible .-> X[❌ Not even ShadowSeal<br>creator!]
 ```
 
 ---
@@ -56,14 +56,14 @@ graph TD
 📦 Installation
 
 ```bash
-pip install shadowcrypt
+pip install shadowseal
 ```
 
 or from source:
 
 ```bash
-git clone https://github.com/AFTeam-Owner/shadowcrypt.git
-cd shadowcrypt
+git clone https://github.com/AFTeam-Owner/shadowseal.git
+cd shadowseal
 pip install .
 ```
 
@@ -72,8 +72,8 @@ pip install .
 🔐 Encrypt Your File
 
 ```bash
-shadowcrypt-encrypt script.py -o output.shc
-shadowcrypt-run output.shc
+shadowseal encrypt script.py -o output.shc
+shadowseal run output.shc
 ```
 
 ➡️ Still runs.  
@@ -85,8 +85,8 @@ shadowcrypt-run output.shc
 💻 Terminal Simulation
 
 ```bash
-> shadowcrypt-encrypt script.py -o output.shc
-> shadowcrypt-run output.shc
+> shadowseal encrypt script.py -o output.shc
+> shadowseal run output.shc
 🔐 Encrypting with advanced math...
 ✅ Saved to brain.py
 💥 Launching encrypted code...
@@ -137,7 +137,7 @@ shadowcrypt-run output.shc
 
 🧩 Project Highlights
 
-- 🛡️ ShadowCrypt — Undecodable Python encryption (math-based, AI-proof)
+- 🛡️ ShadowSeal — Undecodable Python encryption (math-based, AI-proof)
 - 🧠 InfinityPrompt — Multi-model AI platform with role/reseller system
 - 🛰️ Auto Bots — Telegram bots that forward media, search data, and manage file backups
 - 🔐 Key Systems — Full control: user limits, expiry, JSON history, hourly usage stats
@@ -181,7 +181,7 @@ shadowcrypt-run output.shc
 - 🔥 No decryptor — by design
 - 🧠 Impossible to reverse, even theoretically
 
-> ShadowCrypt isn’t obfuscation — it’s mathematical exile.
+> ShadowSeal isn’t obfuscation — it’s mathematical exile.
 
 ---
 
