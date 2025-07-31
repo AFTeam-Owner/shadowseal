@@ -1,13 +1,17 @@
+"""
+Pure Python loader for encrypted .shc files.
+Fallback implementation for Android/Termux environments where Cython compilation fails.
+"""
+
 import os
 import struct
 import sys
 import base64
 from encryptor.encrypt import decrypt_data, unpack_shc, generate_key_from_password, generate_fixed_key
 from utils.anti_debug import anti_debug
-from utils.cross_platform import CrossPlatformManager
 
 def run_shc(filepath, password=None):
-    """Run an encrypted .shc file"""
+    """Run an encrypted .shc file using pure Python implementation"""
     try:
         if anti_debug():
             print("Debugging detected. Exiting.")
@@ -80,13 +84,19 @@ def run_shc(filepath, password=None):
         return False
 
 def main():
+    """Main function for standalone testing"""
     import argparse
-    parser = argparse.ArgumentParser(description='Run encrypted .shc Python file')
+    parser = argparse.ArgumentParser(description='Run encrypted .shc Python file (Pure Python)')
     parser.add_argument('filepath', help='Path to the encrypted .shc file')
     parser.add_argument('-p', '--password', help='Decryption password (optional for passwordless files)')
     args = parser.parse_args()
     
-    run_shc(args.filepath, args.password)
+    success = run_shc(args.filepath, args.password)
+    if success:
+        print("✅ Execution completed successfully")
+    else:
+        print("❌ Execution failed")
+        sys.exit(1)
 
 if __name__ == '__main__':
     main()

@@ -6,6 +6,7 @@ requirements.txt
 setup.py
 encryptor/__init__.py
 encryptor/encrypt.py
+engine/__init__.py
 engine/vm.py
 obfuscator/__init__.py
 obfuscator/ast_obfuscator.py
@@ -14,6 +15,7 @@ runner/__init__.py
 runner/cy_loader.c
 runner/cy_loader.pyx
 runner/loader.py
+runner/py_loader.py
 shadowseal/__init__.py
 shadowseal/cli.py
 shadowseal.egg-info/PKG-INFO
@@ -25,5 +27,6 @@ shadowseal.egg-info/requires.txt
 shadowseal.egg-info/top_level.txt
 utils/__init__.py
 utils/anti_debug.py
+utils/cross_platform.py
 utils/fileutils.py
 utils/systemcheck.py
