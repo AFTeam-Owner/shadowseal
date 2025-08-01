@@ -25,6 +25,13 @@ def is_android():
             return True
         if "android" in platform.platform().lower():
             return True
+        # Check for Android in uname
+        try:
+            result = subprocess.run(['uname', '-a'], capture_output=True, text=True, timeout=2)
+            if result.returncode == 0 and 'android' in result.stdout.lower():
+                return True
+        except:
+            pass
         return False
     except:
         return False
@@ -238,16 +245,15 @@ def check_cpu_anomaly():
 
 def anti_debug():
     """Comprehensive anti-debugging detection"""
+    # Completely skip anti-debug on Android/Termux to prevent false positives
+    if is_android():
+        return False
+        
+    # Simplified checks for non-Android platforms
     checks = [
         check_ptrace,
-        check_debugger_processes,
         check_debugger_env,
-        check_tracerpid,
-        check_parent_process,
         check_sys_trace,
-        check_time_anomaly,
-        check_memory_anomaly,
-        check_cpu_anomaly,
     ]
     
     for check in checks:
