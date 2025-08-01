@@ -221,11 +221,22 @@ pip install shadowseal
 pip install shadowseal
 ```
 
-#### Android (Termux)
+#### Android (Termux) - Optimized (30s install)
 ```bash
+# Fast installation (30 seconds)
 pkg update && pkg upgrade
-pkg install python rust
-pip install shadowseal
+pkg install python git
+pip install cryptography
+pip install --no-deps shadowseal
+```
+
+#### Android (Termux) - Manual (Lightweight)
+```bash
+# Clone and install lightweight version
+git clone https://github.com/AFTeam-Owner/shadowseal.git
+cd shadowseal
+pip install cryptography
+python setup-termux.py install
 ```
 
 #### Android (Pydroid)

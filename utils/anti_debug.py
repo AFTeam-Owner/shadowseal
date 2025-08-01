@@ -6,10 +6,35 @@ import subprocess
 import time
 import threading
 import random
-import psutil
+
+# Optional psutil import - handle gracefully if not available
+try:
+    import psutil
+    HAS_PSUTIL = True
+except ImportError:
+    HAS_PSUTIL = False
+    psutil = None
+
+def is_android():
+    """Check if running on Android/Termux environment"""
+    try:
+        # Check for Android-specific indicators
+        if os.path.exists("/system/build.prop") or os.path.exists("/system/bin/getprop"):
+            return True
+        if "TERMUX" in os.environ.get("PREFIX", ""):
+            return True
+        if "android" in platform.platform().lower():
+            return True
+        return False
+    except:
+        return False
 
 def check_ptrace():
     """Check for ptrace debugging - cross-platform compatible"""
+    # Skip ptrace checks on Android/Termux to prevent false positives
+    if is_android():
+        return False
+        
     system = platform.system()
     
     if system == "Linux" or system == "Darwin":  # Linux and macOS
@@ -20,6 +45,7 @@ def check_ptrace():
                     for line in f:
                         if line.startswith("TracerPid:"):
                             tracerpid = int(line.split()[1])
+                            # On Android/Termux, ignore tracerpid as it may be misleading
                             return tracerpid != 0
             
             # macOS doesn't have /proc, so use alternative methods
@@ -38,8 +64,16 @@ def check_ptrace():
 
 def check_debugger_processes():
     """Check for known debugger processes"""
+    # Skip aggressive process checking on Android/Termux
+    if is_android():
+        return False
+    
+    # Skip if psutil not available
+    if not HAS_PSUTIL:
+        return False
+        
     debuggers = [
-        'gdb', 'lldb', 'strace', 'ltrace', 'ida', 'ollydbg', 
+        'gdb', 'lldb', 'strace', 'ltrace', 'ida', 'ollydbg',
         'x64dbg', 'windbg', 'radare2', 'hopper', 'binaryninja',
         'frida', 'mitmproxy', 'burpsuite', 'wireshark'
     ]
@@ -61,11 +95,20 @@ def check_debugger_processes():
 
 def check_debugger_env():
     """Check for debugging environment variables"""
-    debugger_vars = [
-        'LD_PRELOAD', 'PYTHONBREAKPOINT', 'PYTHONINSPECT',
-        'PYDEVD_LOAD_VALUES_ASYNC', 'PYDEVD_USE_FRAME_EVAL',
-        'PYDEVD_USE_CYTHON', 'PYDEVD_DEBUG_FILE'
-    ]
+    # Allow common Termux/Android environment variables
+    if is_android():
+        debugger_vars = [
+            'PYTHONBREAKPOINT', 'PYTHONINSPECT',
+            'PYDEVD_LOAD_VALUES_ASYNC', 'PYDEVD_USE_FRAME_EVAL',
+            'PYDEVD_USE_CYTHON', 'PYDEVD_DEBUG_FILE'
+        ]
+        # Allow LD_PRELOAD on Android as it's commonly used legitimately
+    else:
+        debugger_vars = [
+            'LD_PRELOAD', 'PYTHONBREAKPOINT', 'PYTHONINSPECT',
+            'PYDEVD_LOAD_VALUES_ASYNC', 'PYDEVD_USE_FRAME_EVAL',
+            'PYDEVD_USE_CYTHON', 'PYDEVD_DEBUG_FILE'
+        ]
     
     for var in debugger_vars:
         if os.environ.get(var):
@@ -80,6 +123,10 @@ def check_debugger_env():
 
 def check_tracerpid():
     """Enhanced tracer PID check - cross-platform compatible"""
+    # Skip tracerpid checks on Android/Termux
+    if is_android():
+        return False
+        
     system = platform.system()
     
     if system == "Linux":
@@ -90,6 +137,7 @@ def check_tracerpid():
                     for line in f:
                         if line.startswith("TracerPid:"):
                             tracerpid = int(line.split()[1])
+                            # On Android/Termux, ignore tracerpid as it may be misleading
                             if tracerpid != 0:
                                 return True
             
@@ -109,6 +157,14 @@ def check_tracerpid():
 
 def check_parent_process():
     """Check if parent process is a debugger"""
+    # Skip parent process checks on Android/Termux
+    if is_android():
+        return False
+    
+    # Skip if psutil not available
+    if not HAS_PSUTIL:
+        return False
+        
     try:
         parent = psutil.Process().parent()
         if parent:
@@ -121,10 +177,17 @@ def check_parent_process():
 
 def check_sys_trace():
     """Check Python's tracing mechanism"""
+    # Allow tracing on Android/Termux as it might be normal
+    if is_android():
+        return False
     return sys.gettrace() is not None
 
 def check_time_anomaly():
     """Detect time-based debugging detection"""
+    # Skip time anomaly checks on Android/Termux due to system variability
+    if is_android():
+        return False
+        
     start = time.perf_counter()
     time.sleep(0.001)  # Small delay
     end = time.perf_counter()
@@ -137,6 +200,10 @@ def check_time_anomaly():
 
 def check_memory_anomaly():
     """Check for memory debugging patterns"""
+    # Skip memory checks on Android/Termux
+    if is_android():
+        return False
+        
     try:
         import gc
         gc.collect()
@@ -154,6 +221,14 @@ def check_memory_anomaly():
 
 def check_cpu_anomaly():
     """Check CPU usage patterns for debugging"""
+    # Skip CPU checks on Android/Termux due to system variability
+    if is_android():
+        return False
+    
+    # Skip if psutil not available
+    if not HAS_PSUTIL:
+        return False
+        
     try:
         cpu_percent = psutil.Process().cpu_percent(interval=0.1)
         # Debuggers often cause higher CPU usage
